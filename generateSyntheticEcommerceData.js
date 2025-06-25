@@ -1,7 +1,7 @@
-
 const fs = require("fs");
-const { v4: uuidv4} = require("uuid");
+const { v4: uuidv4 } = require("uuid");
 
+// Define some sample products, user pools, and geolocations
 const products = [
   { product_id: 1001, name: "Wireless Mouse", base_price: 19.99 },
   { product_id: 1002, name: "Bluetooth Headphones", base_price: 49.99 },
@@ -31,12 +31,14 @@ const cities = {
 };
 
 function generateSyntheticEcommerceData(outputCsv = "synthetic_orders.csv", numRecords = 1_000_000) {
+  // Determine date range (last 365 days up to today)
+  const now = new Date();
+  const startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000); // 365 days ago
 
-    const now = new Date();
-     const startDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000); // 365 days ago
-     const writeStream = fs.createWriteStream(outputCsv, { encoding: "utf-8" });
+  // Create a writable stream for CSV
+  const writeStream = fs.createWriteStream(outputCsv, { encoding: "utf-8" });
 
-     // Write header row
+  // Write header row
   writeStream.write([
     "order_id",
     "order_date",
@@ -49,7 +51,7 @@ function generateSyntheticEcommerceData(outputCsv = "synthetic_orders.csv", numR
     "city"
   ].join(",") + "\n");
 
-  for(let i = 0; i < numRecords; i++) {
+  for (let i = 0; i < numRecords; i++) {
     const orderId = uuidv4();
 
     // Generate a random date within the last 365 days
@@ -70,7 +72,6 @@ function generateSyntheticEcommerceData(outputCsv = "synthetic_orders.csv", numR
     const finalPrice = +(basePrice * (0.9 + Math.random() * 0.2)).toFixed(2); // +/- 10%
     const totalAmount = +(finalPrice * quantity).toFixed(2);
 
-
     // Random country and city
     const country = countries[Math.floor(Math.random() * countries.length)];
     const cityList = cities[country];
@@ -89,8 +90,8 @@ function generateSyntheticEcommerceData(outputCsv = "synthetic_orders.csv", numR
       city
     ].join(",") + "\n");
   }
-  
-// End the stream
+
+  // End the stream
   writeStream.end(() => {
     console.log(`Successfully generated ${numRecords} synthetic records in '${outputCsv}'.`);
   });
@@ -99,6 +100,4 @@ function generateSyntheticEcommerceData(outputCsv = "synthetic_orders.csv", numR
 // Run the script if called directly (e.g., `node generateSyntheticEcommerceData.js`)
 if (require.main === module) {
   generateSyntheticEcommerceData("synthetic_orders.csv", 100000);
-  
 }
-
