@@ -3,20 +3,11 @@ const router = express.Router();
 const multer = require('multer');
 const fs = require('fs');
 const csv = require('csv-parser');
-const mysql = require('mysql2');
+const db = require('../db');
 
 
 
 const upload = multer({dest : './uploads/'});
-
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'secret',
-  database: 'orders',
-  port: 3306, 
-  multipleStatements: true 
-});
 
 router.post('/', upload.single('file'), (req, res) => {
     if(!req.file) {
