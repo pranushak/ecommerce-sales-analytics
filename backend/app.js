@@ -9,6 +9,7 @@ app.use(cors());
 app.use('/upload',uploadRoutes);
 app.use('/analytics', analyticsRoutes);
 
+
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 })
