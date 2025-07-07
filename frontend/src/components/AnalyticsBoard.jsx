@@ -30,10 +30,10 @@ export default function AnalyticsDashboard() {
 
     return (
          <div style={{ padding: '2rem' }}>
-      <h2>📊 Analytics Dashboard</h2>
+      <h2>Analytics Dashboard</h2>
 
       <section>
-        <h3>📅 Daily Sales</h3>
+        <h3>Daily Sales</h3>
         <table border="1" cellPadding="5">
           <thead>
             <tr>
